@@ -16,6 +16,20 @@ class Div extends Element implements Idiv {
 	}
 
 	@Override
+	protected void handleAttributes(Map<IAttribute, String>... attributes) {
+		super.handleAttributes(attributes);
+
+		if (attributes.length > 0) {
+			for (IAttribute attr : attributes[0].keySet()) {
+				if (attr instanceof DivAttribute) {
+					attribute((DivAttribute) attr,
+							AlignValue.valueOf(attributes[0].get(attr)));
+				}
+			}
+		}
+	}
+
+	@Override
 	public String startTag() {
 		return "<div" + getUniversalAttributesAsString()
 				+ getAttributesAsString() + (children.size() > 0 ? ">" : "/>")

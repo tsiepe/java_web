@@ -13,6 +13,20 @@ class A extends Element implements Ia {
 	}
 
 	@Override
+	protected void handleAttributes(Map<IAttribute, String>... attributes) {
+		super.handleAttributes(attributes);
+		
+		if (attributes.length > 0) {
+			for (IAttribute attr : attributes[0].keySet()) {
+				if (attr instanceof AAttribute) {
+					attribute((AAttribute) attr,
+							attributes[0].get(attr));
+				}
+			}
+		}
+	}
+	
+	@Override
 	public Ia text(String content) {
 		children.add(new Text(content));
 

@@ -14,6 +14,19 @@ class Head extends Element implements Ihead {
 	}
 
 	@Override
+	protected void handleAttributes(Map<IAttribute, String>... attributes) {
+		super.handleAttributes(attributes);
+
+		if (attributes.length > 0) {
+			for (IAttribute attr : attributes[0].keySet()) {
+				if (attr instanceof HeadAttribute) {
+					attribute((HeadAttribute) attr, attributes[0].get(attr));
+				}
+			}
+		}
+	}
+
+	@Override
 	public String startTag() {
 		return "<head" + getUniversalAttributesAsString()
 				+ getAttributesAsString() + ">" + Constants.CR;

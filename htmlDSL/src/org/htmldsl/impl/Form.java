@@ -13,6 +13,19 @@ class Form extends Element implements Iform {
 	}
 
 	@Override
+	protected void handleAttributes(Map<IAttribute, String>... attributes) {
+		super.handleAttributes(attributes);
+
+		if (attributes.length > 0) {
+			for (IAttribute attr : attributes[0].keySet()) {
+				if (attr instanceof FormAttribute) {
+					attribute((FormAttribute) attr, attributes[0].get(attr));
+				}
+			}
+		}
+	}
+
+	@Override
 	public String startTag() {
 		if (!attributes.containsKey(FormAttribute.action)) {
 			throw new RuntimeException(
@@ -28,4 +41,24 @@ class Form extends Element implements Iform {
 		return "</form>";
 	}
 
+	@Override
+	public Iform attribute(FormAttribute attr, String value) {
+		attributes.put(attr, value);
+
+		return this;
+	}
+
+	@Override
+	public Iform attribute(FormAttribute attr, TargetType value) {
+		attributes.put(attr, "" + value);
+
+		return this;
+	}
+
+	@Override
+	public Iform attribute(FormAttribute attr, MethodType value) {
+		attributes.put(attr, "" + value);
+
+		return this;
+	}
 }

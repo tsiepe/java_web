@@ -33,4 +33,10 @@ public interface Iform extends IPrintable, IAttributable {
 			return name();
 		}
 	}
+
+	Iform attribute(FormAttribute attr, String value);
+
+	Iform attribute(FormAttribute attr, TargetType value);
+
+	Iform attribute(FormAttribute attr, MethodType value);
 }
