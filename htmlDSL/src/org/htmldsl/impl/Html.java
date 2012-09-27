@@ -104,10 +104,16 @@ class Html extends Element implements Ihtml {
 		return "</html>" + Constants.CR;
 	}
 
+	private String insertDocType() {
+		return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">"
+				+ Constants.CR;
+	}
+
 	@Override
 	public String toHtmlString(int lastIndent) {
 		StringBuilder sb = new StringBuilder();
 
+		sb.append(insertDocType());
 		sb.append(startTag());
 
 		for (HtmlChild key : children.keySet()) {
