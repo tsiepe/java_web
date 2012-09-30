@@ -1,5 +1,7 @@
 package org.htmldsl.api;
 
+import java.util.Map;
+
 import org.htmldsl.api.internal.IAttributable;
 import org.htmldsl.api.internal.IPrintable;
 
@@ -39,4 +41,8 @@ public interface Iform extends IPrintable, IAttributable {
 	Iform attribute(FormAttribute attr, TargetType value);
 
 	Iform attribute(FormAttribute attr, MethodType value);
+
+	Idiv div(Map<IAttribute, String>... attributes);
+
+	Idl dl(Map<IAttribute, String>... attributes);
 }

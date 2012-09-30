@@ -10,7 +10,6 @@ import org.htmldsl.api.Iframeset;
 import org.htmldsl.api.Ihead;
 import org.htmldsl.api.Ihtml;
 import org.htmldsl.api.internal.Constants;
-import org.htmldsl.api.internal.IAttributable;
 import org.htmldsl.api.internal.IPrintable;
 
 class Html extends Element implements Ihtml {
@@ -61,7 +60,7 @@ class Html extends Element implements Ihtml {
 
 		if (children.containsKey(HtmlChild.head)) {
 			if (!children.containsKey(HtmlChild.frameset)) {
-				result = new Body();
+				result = new Body(attributes);
 				children.put(HtmlChild.body, result);
 			} else {
 				throw new RuntimeException(
@@ -129,11 +128,6 @@ class Html extends Element implements Ihtml {
 	public Ihtml attribute(HtmlAttribute attr, String value) {
 		attributes.put(attr, value);
 
-		return this;
-	}
-
-	@Override
-	public IAttributable attribute(UniversalAttribute attr, String value) {
 		return this;
 	}
 }

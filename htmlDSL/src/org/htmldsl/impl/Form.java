@@ -3,6 +3,8 @@ package org.htmldsl.impl;
 import java.util.Map;
 
 import org.htmldsl.api.IAttribute;
+import org.htmldsl.api.Idiv;
+import org.htmldsl.api.Idl;
 import org.htmldsl.api.Iform;
 import org.htmldsl.api.internal.Constants;
 
@@ -60,5 +62,15 @@ class Form extends Element implements Iform {
 		attributes.put(attr, "" + value);
 
 		return this;
+	}
+
+	@Override
+	public Idiv div(Map<IAttribute, String>... attributes) {
+		return new Div(attributes);
+	}
+
+	@Override
+	public Idl dl(Map<IAttribute, String>... attributes) {
+		return new Dl(attributes);
 	}
 }
