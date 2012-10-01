@@ -6,7 +6,7 @@ import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Itable;
 import org.htmldsl.api.Itr;
 
-public class Table extends Element implements Itable {
+class Table extends Element implements Itable {
 
 	@Override
 	public String startTag() {
@@ -26,19 +26,4 @@ public class Table extends Element implements Itable {
 
 		return tr;
 	}
-
-	@Override
-	public Itable attribute(TableAttribute attrKey,
-			AlignAttributeValue attrValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Itable attribute(TableAttribute attrKey,
-			ValignAttributeValue attrValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
