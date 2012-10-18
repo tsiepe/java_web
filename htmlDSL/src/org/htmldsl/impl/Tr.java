@@ -41,14 +41,18 @@ class Tr extends Element implements Itr {
 
 	@Override
 	public Itd td(Map<IAttribute, String>... attributes) {
-		// TODO Auto-generated method stub
-		return null;
+		Itd td = new Td(attributes);
+		children.add(td);
+
+		return td;
 	}
 
 	@Override
 	public Ith th(Map<IAttribute, String>... attributes) {
-		// TODO Auto-generated method stub
-		return null;
+		Ith th = new Th(attributes);
+		children.add(th);
+
+		return th;
 	}
 
 }
