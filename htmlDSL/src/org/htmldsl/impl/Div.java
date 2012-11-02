@@ -7,6 +7,7 @@ import org.htmldsl.api.Ia;
 import org.htmldsl.api.Idiv;
 import org.htmldsl.api.Idl;
 import org.htmldsl.api.Iform;
+import org.htmldsl.api.Itable;
 import org.htmldsl.api.internal.Constants;
 
 class Div extends Element implements Idiv {
@@ -85,6 +86,14 @@ class Div extends Element implements Idiv {
 		children.add(form);
 
 		return form;
+	}
+
+	@Override
+	public Itable table(Map<IAttribute, String>... attributes) {
+		Itable table = new Table(attributes);
+		children.add(table);
+
+		return table;
 	}
 
 }

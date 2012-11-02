@@ -8,6 +8,10 @@ import org.htmldsl.api.Itr;
 
 class Table extends Element implements Itable {
 
+	Table(Map<IAttribute, String>... attributes) {
+		handleAttributes(attributes);
+	}
+
 	@Override
 	public String startTag() {
 		return "<table" + getUniversalAttributesAsString()

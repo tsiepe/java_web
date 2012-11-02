@@ -35,4 +35,6 @@ public interface Idiv extends IPrintable, IAttributable, ITextContainer<Idiv> {
 	Idl dl(Map<IAttribute, String>... attributes);
 
 	Iform form(Map<IAttribute, String>... attributes);
+
+	Itable table(Map<IAttribute, String>... attributes);
 }
