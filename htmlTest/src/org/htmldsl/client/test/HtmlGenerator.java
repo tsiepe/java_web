@@ -45,14 +45,14 @@ public class HtmlGenerator extends HttpServlet {
 		body.div().form().attribute(FormAttribute.action, MethodType.post)
 				.div().text("This is form content.");
 		Itable table = body.div().table();
-		Itr tr = table.tr();
-		tr.th().text("First row");
-		tr.td().text("First data cell");
-		tr.td().text("Second data cell");
-		Itr tr_ = table.tr();
-		tr_.th().text("Second row");
-		tr_.td().text("First data cell...");
-		tr_.td().text("Second data cell...");
+		Itr tr1 = table.tr();
+		tr1.th().text("First row");
+		tr1.td().text("First data cell");
+		tr1.td().text("Second data cell");
+		Itr tr2 = table.tr();
+		tr2.th().text("Second row");
+		tr2.td().text("First data cell...");
+		tr2.td().text("Second data cell...");
 
 		response.getWriter().write(html.toHtmlString(0));
 	}

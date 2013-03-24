@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Ihead;
+import org.htmldsl.api.Ilink;
 import org.htmldsl.api.internal.Constants;
 import org.htmldsl.util.Utils;
 
@@ -54,5 +55,13 @@ class Head extends Element implements Ihead {
 		attributes.put(attr, value);
 
 		return this;
+	}
+
+	@Override
+	public Ilink link(Map<IAttribute, String>... attributes) {
+		Ilink link = new Link(attributes);
+		children.add(link);
+
+		return link;
 	}
 }

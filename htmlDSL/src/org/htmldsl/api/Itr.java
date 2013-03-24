@@ -7,17 +7,9 @@ import org.htmldsl.api.internal.IPrintable;
 
 public interface Itr extends IAttributable, IPrintable {
 
+	@Deprecated
 	static enum TrAttribute implements IAttribute {
-		align, valign;
-
-		@Override
-		public String toString() {
-			return name();
-		}
-	}
-
-	static enum AlignAttributeValue {
-		Char, charoff;
+		align, valign, bgcolor, Char, charoff;
 
 		@Override
 		public String toString() {
@@ -25,6 +17,17 @@ public interface Itr extends IAttributable, IPrintable {
 		}
 	}
 
+	@Deprecated
+	static enum AlignAttributeValue {
+		left, center, right, justify, Char;
+
+		@Override
+		public String toString() {
+			return name().toLowerCase();
+		}
+	}
+
+	@Deprecated
 	static enum ValignAttributeValue {
 		top, middle, bottom, baseline;
 

@@ -1,5 +1,7 @@
 package org.htmldsl.api;
 
+import java.util.Map;
+
 import org.htmldsl.api.internal.IPrintable;
 
 public interface Ihead extends IPrintable {
@@ -14,4 +16,6 @@ public interface Ihead extends IPrintable {
 			return name();
 		}
 	}
+
+	Ilink link(Map<IAttribute, String>... attributes);
 }

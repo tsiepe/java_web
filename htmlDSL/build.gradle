@@ -1,0 +1,53 @@
+apply plugin:'java'
+
+configurations {
+        ajc
+        aspects
+        ajInpath
+	antConfig
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+   main {
+      java {
+	srcDirs = files('src')
+      } 
+   }
+}
+
+ext.classesDir = file('build/classes')
+ext.sourceCompatibility = '1.7'
+ext.targetCompatibility = '1.7'
+
+dependencies {
+	compile fileTree(dir: 'lib', include: '*.jar')
+	ajc fileTree(dir: 'lib', include: '*.jar')
+}
+
+task compileJava(dependsOn: JavaPlugin.PROCESS_RESOURCES_TASK_NAME, overwrite: true)  {
+        dependsOn configurations.ajc.getTaskDependencyFromProjectDependency(true, "compileJava")
+
+        doLast {
+		def iajcClasspath = ''
+		fileTree(dir: 'lib', include: '*.jar').files.each { jarFile ->
+			iajcClasspath += jarFile.canonicalPath + ':'
+		}
+
+                ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.ajc.asPath)
+                ant.iajc(source: sourceCompatibility, target: targetCompatibility, destDir: classesDir.absolutePath, maxmem:"512m", fork:"true",
+                        aspectPath: configurations.aspects.asPath, inpath: configurations.ajInpath.asPath, sourceRootCopyFilter: "**/.gradle/*,**/*.java", classpath: configurations.compile.asPath, XnoInline: true) {
+
+                        sourceroots {
+                                sourceSets.main.java.srcDirs.each {
+                                        pathelement(location: it.absolutePath)
+                                }
+                        }
+                }
+        }
+
+}
+

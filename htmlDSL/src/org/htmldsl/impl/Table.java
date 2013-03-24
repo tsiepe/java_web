@@ -30,4 +30,11 @@ class Table extends Element implements Itable {
 
 		return tr;
 	}
+
+	@Override
+	public Itable attribute(TableAttribute attr, String value) {
+		attributes.put(attr, value);
+
+		return this;
+	}
 }
