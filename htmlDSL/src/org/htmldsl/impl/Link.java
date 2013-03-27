@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Ilink;
+import org.htmldsl.api.internal.Constants;
 
 class Link extends Element implements Ilink {
 
@@ -31,7 +32,7 @@ class Link extends Element implements Ilink {
 
 	@Override
 	public String endTag() {
-		return "/>";
+		return "/>" + Constants.CR;
 	}
 
 	@Override

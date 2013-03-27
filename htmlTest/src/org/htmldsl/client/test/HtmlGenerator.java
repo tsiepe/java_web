@@ -1,6 +1,8 @@
 package org.htmldsl.client.test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,11 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Ia.AAttribute;
 import org.htmldsl.api.Ibody;
 import org.htmldsl.api.Iform.FormAttribute;
 import org.htmldsl.api.Iform.MethodType;
+import org.htmldsl.api.Ihead;
 import org.htmldsl.api.Ihtml;
+import org.htmldsl.api.Ilink.LinkAttribute;
+import org.htmldsl.api.Imeta.MetaAttribute;
 import org.htmldsl.api.Itable;
 import org.htmldsl.api.Itr;
 import org.htmldsl.impl.DocumentFactory;
@@ -38,7 +44,15 @@ public class HtmlGenerator extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Ihtml html = DocumentFactory.getInstance().html();
-		html.head();
+		Ihead head = html.head();
+		head.link()
+				.attribute(LinkAttribute.rel, "stylesheet")
+				.attribute(LinkAttribute.href,
+						"http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css");
+		Map<IAttribute, String> metaAttrs = new HashMap<IAttribute, String>();
+		metaAttrs.put(MetaAttribute.http_equiv, "expires");
+		metaAttrs.put(MetaAttribute.content, "Sat, 01 Dec 2001 00:00:00 GMT");
+		head.meta(metaAttrs);
 		Ibody body = html.body();
 		body.div().a().text("Google Deutschland")
 				.attribute(AAttribute.href, "http://www.google.de");
@@ -56,5 +70,4 @@ public class HtmlGenerator extends HttpServlet {
 
 		response.getWriter().write(html.toHtmlString(0));
 	}
-
 }
