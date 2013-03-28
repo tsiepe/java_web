@@ -18,15 +18,6 @@ public interface Iform extends IPrintable, IAttributable {
 		}
 	}
 
-	static enum TargetType implements IAttribute {
-		_blank, _parent, _self, _top;
-
-		@Override
-		public String toString() {
-			return name();
-		}
-	}
-
 	static enum MethodType implements IAttribute {
 		get, post;
 

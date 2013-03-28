@@ -20,4 +20,6 @@ public interface Ihead extends IPrintable {
 	Ilink link(Map<IAttribute, String>... attributes);
 
 	Imeta meta(Map<IAttribute, String>... attributes);
+
+	Iscript script(Map<IAttribute, String>... attributes);
 }

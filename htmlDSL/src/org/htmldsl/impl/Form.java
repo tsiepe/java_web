@@ -6,6 +6,7 @@ import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Idiv;
 import org.htmldsl.api.Idl;
 import org.htmldsl.api.Iform;
+import org.htmldsl.api.TargetType;
 import org.htmldsl.api.internal.Constants;
 
 class Form extends Element implements Iform {

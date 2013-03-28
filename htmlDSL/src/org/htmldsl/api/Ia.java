@@ -26,13 +26,5 @@ public interface Ia extends IPrintable, IAttributable, ITextContainer<Ia> {
 		}
 	}
 
-	static enum TargetValue implements IAttribute {
-		_blank, _parent, _self, _top;
-
-		public String toString() {
-			return name();
-		}
-	}
-
 	Ia attribute(AAttribute attr, String value);
 }

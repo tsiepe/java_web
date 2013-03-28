@@ -6,6 +6,7 @@ import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Ihead;
 import org.htmldsl.api.Ilink;
 import org.htmldsl.api.Imeta;
+import org.htmldsl.api.Iscript;
 import org.htmldsl.api.internal.Constants;
 
 class Head extends Element implements Ihead {
@@ -59,5 +60,13 @@ class Head extends Element implements Ihead {
 		children.add(meta);
 
 		return meta;
+	}
+
+	@Override
+	public Iscript script(Map<IAttribute, String>... attributes) {
+		Iscript script = new Script(attributes);
+		children.add(script);
+
+		return script;
 	}
 }

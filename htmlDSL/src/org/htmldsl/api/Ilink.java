@@ -14,30 +14,5 @@ public interface Ilink extends IAttributable, IPrintable {
 		}
 	}
 
-	static enum TargetAttributeValue {
-		_blank, _parent, _self, _top;
-
-		@Override
-		public String toString() {
-			return name();
-		}
-	}
-
-	static enum TypeAttributeMIMETypeValue {
-		serverSideJavaScript("application/x-javascript"), javaScript(
-				"text/javascript");
-
-		private String mimeType;
-
-		TypeAttributeMIMETypeValue(String mimeType) {
-			this.mimeType = mimeType;
-		}
-
-		@Override
-		public String toString() {
-			return mimeType;
-		}
-	}
-
 	Ilink attribute(LinkAttribute attr, String value);
 }
