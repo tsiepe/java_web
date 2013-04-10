@@ -17,6 +17,22 @@ abstract class Element implements IPrintable, IAttributable {
 	protected List<IPrintable> children = new ArrayList<IPrintable>();
 	protected Map<Object, String> attributes = new HashMap<Object, String>();
 
+	public List<IPrintable> children() {
+		return children;
+	}
+
+	public <T extends IPrintable> List<T> children(Class<T> kind) {
+		List<T> result = new ArrayList<T>();
+
+		for (IPrintable e : children) {
+			if (kind.isAssignableFrom(e.getClass())) {
+				result.add((T) e);
+			}
+		}
+
+		return result;
+	}
+
 	protected void handleAttributes(Map<IAttribute, String>... attributes) {
 		if (attributes.length > 0) {
 			for (IAttribute attr : attributes[0].keySet()) {

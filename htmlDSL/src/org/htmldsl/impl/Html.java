@@ -48,27 +48,33 @@ class Html extends Element implements Ihtml {
 
 	@Override
 	public Ihead head(Map<IAttribute, String>... attributes) {
-		Ihead result = new Head(attributes);
-		children.put(HtmlChild.head, result);
+		Ihead result = (Ihead) children.get(HtmlChild.head);
+
+		if (null == result) {
+			result = new Head(attributes);
+			children.put(HtmlChild.head, result);
+		}
 
 		return result;
 	}
 
 	@Override
 	public Ibody body(Map<IAttribute, String>... attributes) {
-		Ibody result = null;
+		Ibody result = (Ibody) children.get(HtmlChild.body);
 
-		if (children.containsKey(HtmlChild.head)) {
-			if (!children.containsKey(HtmlChild.frameset)) {
-				result = new Body(attributes);
-				children.put(HtmlChild.body, result);
+		if (null == result) {
+			if (children.containsKey(HtmlChild.head)) {
+				if (!children.containsKey(HtmlChild.frameset)) {
+					result = new Body(attributes);
+					children.put(HtmlChild.body, result);
+				} else {
+					throw new RuntimeException(
+							"Mutually exclusive elements at this level <body> and <frameset>. Please add either a <body> or a <frameset> but not both at the same time.");
+				}
 			} else {
 				throw new RuntimeException(
-						"Mutually exclusive elements at this level <body> and <frameset>. Please add either a <body> or a <frameset> but not both at the same time.");
+						"You must create the <head> element before adding the <body> tag.");
 			}
-		} else {
-			throw new RuntimeException(
-					"You must create the <head> element before adding the <body> tag.");
 		}
 
 		return result;
@@ -76,19 +82,21 @@ class Html extends Element implements Ihtml {
 
 	@Override
 	public Iframeset frameset(Map<IAttribute, String>... attributes) {
-		Iframeset result = null;
+		Iframeset result = (Iframeset) children.get(HtmlChild.frameset);
 
-		if (children.containsKey(HtmlChild.head)) {
-			if (!children.containsKey(HtmlChild.body)) {
-				result = new Frameset();
-				children.put(HtmlChild.frameset, result);
+		if (null == result) {
+			if (children.containsKey(HtmlChild.head)) {
+				if (!children.containsKey(HtmlChild.body)) {
+					result = new Frameset();
+					children.put(HtmlChild.frameset, result);
+				} else {
+					throw new RuntimeException(
+							"Mutually exclusive elements at this level <body> and <frameset>. Please add either a <body> or a <frameset> but not both at the same time.");
+				}
 			} else {
 				throw new RuntimeException(
-						"Mutually exclusive elements at this level <body> and <frameset>. Please add either a <body> or a <frameset> but not both at the same time.");
+						"You must create the <head> element before adding the <frameset> tag.");
 			}
-		} else {
-			throw new RuntimeException(
-					"You must create the <head> element before adding the <frameset> tag.");
 		}
 
 		return result;
