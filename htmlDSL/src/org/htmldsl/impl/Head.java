@@ -7,6 +7,7 @@ import org.htmldsl.api.Ihead;
 import org.htmldsl.api.Ilink;
 import org.htmldsl.api.Imeta;
 import org.htmldsl.api.Iscript;
+import org.htmldsl.api.Ititle;
 import org.htmldsl.api.internal.Constants;
 
 class Head extends Element implements Ihead {
@@ -68,5 +69,13 @@ class Head extends Element implements Ihead {
 		children.add(script);
 
 		return script;
+	}
+
+	@Override
+	public Ititle title(Map<IAttribute, String>... attributes) {
+		Ititle title = new Title(attributes);
+		children.add(title);
+
+		return title;
 	}
 }

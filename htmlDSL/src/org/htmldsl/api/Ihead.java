@@ -22,4 +22,6 @@ public interface Ihead extends IPrintable {
 	Imeta meta(Map<IAttribute, String>... attributes);
 
 	Iscript script(Map<IAttribute, String>... attributes);
+
+	Ititle title(Map<IAttribute, String>... attributes);
 }

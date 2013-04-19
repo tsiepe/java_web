@@ -50,6 +50,7 @@ public class HtmlGenerator extends HttpServlet {
 				.attribute(LinkAttribute.rel, "stylesheet")
 				.attribute(LinkAttribute.href,
 						"http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css");
+		html.head().title().text("This is htmlDSL's test page!");
 		Map<IAttribute, String> metaAttrs = new HashMap<IAttribute, String>();
 		metaAttrs.put(MetaAttribute.http_equiv, "expires");
 		metaAttrs.put(MetaAttribute.content, "Sat, 01 Dec 2001 00:00:00 GMT");
