@@ -22,7 +22,8 @@ class Script extends Element implements Iscript {
 
 	@Override
 	public String startTag() {
-		if (!attributes.containsKey(ScriptAttribute.type)) {
+		if (!attributes.containsKey(ScriptAttribute.type)
+				&& !attributes.containsKey(ScriptAttribute.src)) {
 			throw new RuntimeException(
 					"Missing mandatory attribute type on <script> element.");
 		}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.htmldsl.api.IAttribute;
+import org.htmldsl.api.Ia;
 import org.htmldsl.api.Ia.AAttribute;
 import org.htmldsl.api.Ibody;
 import org.htmldsl.api.Idiv;
@@ -20,8 +21,10 @@ import org.htmldsl.api.Ihead;
 import org.htmldsl.api.Ihtml;
 import org.htmldsl.api.Ilink.LinkAttribute;
 import org.htmldsl.api.Imeta.MetaAttribute;
+import org.htmldsl.api.Iscript;
 import org.htmldsl.api.Itable;
 import org.htmldsl.api.Itr;
+import org.htmldsl.api.internal.IAttributable.UniversalAttribute;
 import org.htmldsl.impl.DocumentFactory;
 
 /**
@@ -33,15 +36,10 @@ public class HtmlGenerator extends HttpServlet {
 	private static final long serialVersionUID = -4247423577713075088L;
 
 	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public HtmlGenerator() {
-	}
-
-	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Ihtml html = DocumentFactory.getInstance().html();
@@ -49,8 +47,16 @@ public class HtmlGenerator extends HttpServlet {
 		head.link()
 				.attribute(LinkAttribute.rel, "stylesheet")
 				.attribute(LinkAttribute.href,
-						"http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css");
+						"http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css");
 		html.head().title().text("This is htmlDSL's test page!");
+		Map<IAttribute, String> scriptAttrs = new HashMap<IAttribute, String>();
+		scriptAttrs.put(Iscript.ScriptAttribute.src,
+				"http://code.jquery.com/jquery-1.9.1.min.js");
+		html.head().script(scriptAttrs);
+		html.head()
+				.script()
+				.attribute(Iscript.ScriptAttribute.src,
+						"http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js");
 		Map<IAttribute, String> metaAttrs = new HashMap<IAttribute, String>();
 		metaAttrs.put(MetaAttribute.http_equiv, "expires");
 		metaAttrs.put(MetaAttribute.content, "Sat, 01 Dec 2001 00:00:00 GMT");
@@ -103,7 +109,15 @@ public class HtmlGenerator extends HttpServlet {
 		tr2.th().text("Second row");
 		tr2.td().text("First data cell...");
 		tr2.td().text("Second data cell...");
-
+		Map<IAttribute, String> attrs = new HashMap<IAttribute, String>();
+		attrs.put(
+				UniversalAttribute.ONCLICK,
+				"javascript: $.ajax({url: '"
+						+ request.getContextPath()
+						+ "/fragment', dataType: 'html', success: function(data) {alert(data);}, error: function() {alert('Summink went wrong!');}});");
+		attrs.put(Ia.AAttribute.href, "javascript: void(0);");
+		body.children(Idiv.class).get(1).a(attrs)
+				.text("Press this link to trigger AJAX call.");
 		response.getWriter().write(html.toHtmlString(0));
 	}
 }
