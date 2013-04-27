@@ -9,14 +9,11 @@ public class CallTracer {
 
 	@Around("execution(* *.*(..))")
 	public Object traceAnyCall(ProceedingJoinPoint pjp) throws Throwable {
-		Object result = null;
-		System.out.println("About to enter "
-				+ pjp.getSignature().toLongString());
+		System.out.println("Entering " + pjp.getSignature().toLongString());
 
-		result = pjp.proceed();
+		Object result = pjp.proceed();
 
-		System.out.println("About to leave "
-				+ pjp.getSignature().toLongString());
+		System.out.println("Leaving " + pjp.getSignature().toLongString());
 
 		return result;
 	}

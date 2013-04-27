@@ -115,7 +115,7 @@ public class HtmlGenerator extends HttpServlet {
 				UniversalAttribute.ONCLICK,
 				"javascript: $.ajax({url: '"
 						+ request.getContextPath()
-						+ "/fragment', dataType: 'html', success: function(data) {jQuery('body > div').append(data); jQuery('#message').fadeIn();}, error: function() {alert('Summink went wrong!');}});");
+						+ "/fragment', dataType: 'html', success: function(data) {$('body > div').append(data); $('#message').fadeIn(1000, function() {$('#message').fadeOut();});}, error: function() {alert('Summink went wrong!');}});");
 		attrs.put(Ia.AAttribute.href, "javascript: void(0);");
 		body.children(Idiv.class).get(1).a(attrs)
 				.text("Press this link to trigger AJAX call.");
