@@ -15,6 +15,7 @@ import org.htmldsl.api.Ia;
 import org.htmldsl.api.Ia.AAttribute;
 import org.htmldsl.api.Ibody;
 import org.htmldsl.api.Idiv;
+import org.htmldsl.api.Idoctype.DoctypeKind;
 import org.htmldsl.api.Iform.FormAttribute;
 import org.htmldsl.api.Iform.MethodType;
 import org.htmldsl.api.Ihead;
@@ -114,10 +115,13 @@ public class HtmlGenerator extends HttpServlet {
 				UniversalAttribute.ONCLICK,
 				"javascript: $.ajax({url: '"
 						+ request.getContextPath()
-						+ "/fragment', dataType: 'html', success: function(data) {alert(data);}, error: function() {alert('Summink went wrong!');}});");
+						+ "/fragment', dataType: 'html', success: function(data) {jQuery('body > div').append(data); jQuery('#message').fadeIn();}, error: function() {alert('Summink went wrong!');}});");
 		attrs.put(Ia.AAttribute.href, "javascript: void(0);");
 		body.children(Idiv.class).get(1).a(attrs)
 				.text("Press this link to trigger AJAX call.");
-		response.getWriter().write(html.toHtmlString(0));
+		response.getWriter().write(
+				DocumentFactory.getInstance().doctype(DoctypeKind.HTML5)
+						.toHtmlString(0)
+						+ html.toHtmlString(0));
 	}
 }

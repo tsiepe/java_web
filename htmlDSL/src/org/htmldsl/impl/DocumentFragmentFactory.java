@@ -1,5 +1,6 @@
 package org.htmldsl.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.htmldsl.api.internal.IPrintable;
@@ -22,24 +23,36 @@ public class DocumentFragmentFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends IPrintable> T createFragmentRoot(String elementName) {
-		char firstChar = elementName.charAt(0);
+	public <T extends IPrintable> T createFragmentRoot(
+			Class<T> elementInterfaceClass) {
+		T result = null;
+		String simpleImplClassName = elementInterfaceClass.getSimpleName()
+				.substring(1);
 
-		try {
-			return (T) Class
-					.forName(
-							elementImplPackage
-									+ elementName
-											.toLowerCase()
-											.replaceFirst(
-													"" + firstChar,
-													""
-															+ Character
-																	.toUpperCase(firstChar)))
-					.getDeclaredConstructor(Map[].class).newInstance();
-		} catch (Throwable t) {
-			throw new RuntimeException("Element '" + elementName
-					+ "' not allowed as document fragment root.", t);
+		if (elementInterfaceClass.isInterface()) {
+			try {
+				char firstChar = simpleImplClassName.charAt(0);
+				result = (T) Class
+						.forName(
+								elementImplPackage
+										+ simpleImplClassName
+												.toLowerCase()
+												.replaceFirst(
+														"" + firstChar,
+														""
+																+ Character
+																		.toUpperCase(firstChar)))
+						.getDeclaredConstructor(Map[].class)
+						.newInstance((Object) new HashMap[] {});
+			} catch (Throwable t) {
+				throw new RuntimeException("Element '" + simpleImplClassName
+						+ "' not allowed as document fragment root.", t);
+			}
+		} else {
+			throw new RuntimeException("Class '" + elementInterfaceClass
+					+ "' is not a valid interface class.");
 		}
+
+		return result;
 	}
 }
