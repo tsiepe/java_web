@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Server Library [Apache Tomcat v7.0]"/>
+	<classpathentry kind="src" path="/htmlDSL"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -5,15 +5,22 @@ import java.util.Map;
 import org.htmldsl.api.IAttribute;
 import org.htmldsl.api.Idoctype;
 import org.htmldsl.api.Ihtml;
+import org.htmldsl.util.Utils;
 
 public class DocumentFactory {
 
-	private static final DocumentFactory instance = new DocumentFactory();
+	private static DocumentFactory instance = new DocumentFactory();
 
 	protected DocumentFactory() {
 	}
 
-	public static DocumentFactory getInstance() {
+	public static synchronized DocumentFactory getInstance() {
+		if (null == instance) {
+			instance = Utils.getInstance()
+					.<DocumentFactory> getConfiguredInstanceForClass(
+							DocumentFactory.class);
+		}
+
 		return instance;
 	}
 

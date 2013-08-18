@@ -8,7 +8,7 @@ import org.htmldsl.api.Idiv;
 import org.htmldsl.api.Iscript;
 import org.htmldsl.api.internal.Constants;
 
-public class Body extends Element implements Ibody {
+class Body extends Element implements Ibody {
 
 	Body(Map<IAttribute, String>... attributes) {
 		handleAttributes(attributes);

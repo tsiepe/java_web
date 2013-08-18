@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.htmldsl.api.internal.IPrintable;
+import org.htmldsl.util.Utils;
 
 public class DocumentFragmentFactory {
 
@@ -13,12 +14,18 @@ public class DocumentFragmentFactory {
 					DocumentFragmentFactory.class.getName().indexOf(
 							DocumentFragmentFactory.class.getSimpleName()));
 
-	private static final DocumentFragmentFactory instance = new DocumentFragmentFactory();
+	private static DocumentFragmentFactory instance = new DocumentFragmentFactory();
 
 	protected DocumentFragmentFactory() {
 	}
 
-	public static DocumentFragmentFactory getInstance() {
+	public static synchronized DocumentFragmentFactory getInstance() {
+		if (null == instance) {
+			instance = Utils.getInstance()
+					.<DocumentFragmentFactory> getConfiguredInstanceForClass(
+							DocumentFragmentFactory.class);
+		}
+
 		return instance;
 	}
 
