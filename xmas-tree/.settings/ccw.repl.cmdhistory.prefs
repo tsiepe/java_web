@@ -1,0 +1,2 @@
+cmdhistory=["(use xmas-tree.core)" "(draw-tree-to-height 5)" "(draw-tree-to-height 5 true)" "(draw-tree-to-height 20 false)" "(draw-tree-to-height 20 true)" "(draw-tree-to-height 15 true)" "(draw-tree-to-height 20 true)" "(draw-tree-to-height 5 true)" "(draw-tree-to-height 10 true)"]
+eclipse.preferences.version=1
