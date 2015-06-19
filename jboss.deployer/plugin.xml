@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Deployment"
+            id="jboss.deployer.commands.category">
+      </category>
+      <command
+            name="Deploy to JBoss"
+            categoryId="jboss.deployer.commands.category"
+            id="jboss.deployer.commands.jbossDeployCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="jboss.deployer.commands.jbossDeployCommand"
+            class="jboss.deployer.handlers.ClassDeployHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="jboss.deployer.commands.jbossDeployCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Deployment"
+               mnemonic="M"
+               id="jboss.deployer.menus.deploymentMenu">
+            <command
+                  commandId="jboss.deployer.commands.jbossDeployCommand"
+                  mnemonic="S"
+                  id="jboss.deployer.menus.jbossDeployCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="jboss.deployer.toolbars.sampleToolbar">
+            <command
+                  commandId="jboss.deployer.commands.jbossDeployCommand"
+                  icon="icons/product.gif"
+                  tooltip="JBoss Deployer"
+                  id="jboss.deployer.toolbars.jbossDeployCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+         <scope name="default" class="jboss.deployer.preferences.JBossDeployerPreferences"/>
+         <initializer class="jboss.deployer.preferences.JBossDeployerPreferencesInitializer"/>
+         <modifier class="jboss.deployer.preferences.JBossDeployerPreferencesModifyListener"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+         <page name="JBoss Deployer" class="jboss.deployer.preferences.JBossDeployerPreferencePage" id="jboss.deployer.preferences.JBossDeployerPreferencePage"></page>
+   </extension>
+
+</plugin>
