@@ -99,20 +99,32 @@ public class ClassDeployHandler extends AbstractHandler {
 										String fileExtension = fileNameParts[fileNameParts.length - 1];
 
 										try {
-											if (packagingWar.equals(fileExtension)) {
-												copyEarArtifact(ResourcesPlugin.getWorkspace().getRoot()
-														.getProject(projectName), fileName, doc);
-											} else if (packagingJar.equals(fileExtension)) {
+											if (packagingWar.equals(fileExtension)) { // war
+												copyEarArtifact(
+														ResourcesPlugin.getWorkspace().getRoot()
+																.getProject(projectName), fileName, doc);
+											} else if (packagingJar.equals(fileExtension)) { // utility
+																								// jar
+																								// or
+																								// ejb-jar
 												IProject project = ResourcesPlugin.getWorkspace().getRoot()
 														.getProject(projectName);
 												MavenProject mvnProject = new MavenProject(new MavenXpp3Reader()
 														.read(new FileReader(new DefaultModelLocator()
 																.locatePom(new File(project.getLocationURI())))));
 
-												copyEarArtifact(project, packagingEjb.equals(mvnProject.getPackaging()) ? null
-														: earLib, doc);
-											} else {
-
+												copyEarArtifact(project,
+														packagingEjb.equals(mvnProject.getPackaging()) ? null : earLib,
+														doc);
+											} else { // any other old file
+												File outputFile = new File(Platform.getPreferencesService().getString(
+														PLUGIN_ID, STANDALONE_DEPLOYMENTS_PATH,
+														defaultDeploymentLibDir, null), outputDirectoryFile.toPath()
+														.relativize(file).toString());
+												outputFile.getParentFile().mkdirs();
+												Files.copy(file, outputFile.toPath(),
+														StandardCopyOption.REPLACE_EXISTING,
+														StandardCopyOption.COPY_ATTRIBUTES);
 											}
 										} catch (XmlPullParserException | URISyntaxException e) {
 											e.printStackTrace();
@@ -142,14 +154,16 @@ public class ClassDeployHandler extends AbstractHandler {
 		return null;
 	}
 
-	private void copyEarArtifact(IProject project, String targetDir, MessageConsoleStream doc) throws FileNotFoundException,
-			IOException, XmlPullParserException, URISyntaxException {
-		final File deployDir = null != targetDir ? new File(Platform.getPreferencesService().getString(PLUGIN_ID,
-				STANDALONE_DEPLOYMENTS_PATH, defaultDeploymentLibDir, null), targetDir) : new File(Platform
-				.getPreferencesService().getString(PLUGIN_ID, STANDALONE_DEPLOYMENTS_PATH, defaultDeploymentLibDir,
-						null));
+	private void copyEarArtifact(IProject project, String targetFile, MessageConsoleStream doc)
+			throws FileNotFoundException, IOException, XmlPullParserException, URISyntaxException {
+		String deployPath = Platform.getPreferencesService().getString(PLUGIN_ID, STANDALONE_DEPLOYMENTS_PATH,
+				defaultDeploymentLibDir, null);
+		final File deployFile = null != targetFile ? new File(deployPath, targetFile) : new File(deployPath);
 
-		deployDir.mkdirs();
+		if (deployFile.isFile()) {
+			deployFile.getParentFile().mkdirs();
+		}
+
 		MavenProject mvnProject = new MavenProject(new MavenXpp3Reader().read(new FileReader(new DefaultModelLocator()
 				.locatePom(new File(project.getLocationURI())))));
 		String outputDirectory = mvnProject.getBuild().getOutputDirectory();
@@ -167,7 +181,7 @@ public class ClassDeployHandler extends AbstractHandler {
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 					FileVisitResult result = super.preVisitDirectory(dir, attrs);
 
-					File newDir = new File(deployDir, outputDirectoryFile.toPath().relativize(dir).toString());
+					File newDir = new File(deployFile, outputDirectoryFile.toPath().relativize(dir).toString());
 
 					if (!newDir.exists()) {
 						newDir.mkdirs();
@@ -181,8 +195,9 @@ public class ClassDeployHandler extends AbstractHandler {
 					FileVisitResult result = super.visitFile(file, attrs);
 
 					if (!file.toString().endsWith(packagingWar)) {
-						Files.copy(file,
-								new File(deployDir, outputDirectoryFile.toPath().relativize(file).toString()).toPath(),
+						Files.copy(
+								file,
+								new File(deployFile, outputDirectoryFile.toPath().relativize(file).toString()).toPath(),
 								StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
 					}
 
