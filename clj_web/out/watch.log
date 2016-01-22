@@ -1,0 +1,15 @@
+Building ...
+... done. Elapsed 0.361983952 seconds
+rebuilt!
+Watching paths: /home/tsiepe/git_repo/clj_web/src
+Change detected, recompiling ...
+Compiling src/clj_web/core.cljs
+... done. Elapsed 0.750784926 seconds
+rebuilt!
+Change detected, recompiling ...
+Compiling src/clj_web/core.cljs
+... done. Elapsed 0.265072394 seconds
+rebuilt!
+Change detected, recompiling ...
+... done. Elapsed 0.157926997 seconds
+rebuilt!
