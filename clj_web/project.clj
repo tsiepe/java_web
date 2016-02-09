@@ -1,5 +1,6 @@
 (defproject clj_web "0.0.1-SNAPSHOT"
   :description "First tiny web project using ring and compojure in combination with reloadable apps."
+;;  :repositories {"project" "file:repo"}
   :dependencies [
 	[org.clojure/clojure "1.6.0"]
 	[ring/ring-core "1.4.0"] 
